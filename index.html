@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Position Quest - 10 Niveles</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+    <div>
+        <h1>CSS Position Quest</h1>
+        <p>Aprende relative, absolute, fixed y sticky</p>
+    </div>
+    <div class="progress">
+        Nivel <span id="levelNumber">1</span> / 10
+        <div class="progressBar">
+            <div id="progress"></div>
+        </div>
+    </div>
+</header>
+
+<main>
+    <section class="panel">
+        <div class="card">
+            <span id="levelBadge">Nivel 1</span>
+            <h2 id="levelTitle"></h2>
+            <p id="levelDescription"></p>
+            <div class="goal">
+                <strong>Pista:</strong>
+                <span id="levelGoal"></span>
+            </div>
+        </div>
+
+        <div class="card editor">
+            <label for="cssInput">Escribe tu CSS:</label>
+            <input id="cssInput" type="text"
+                placeholder="Ej: position: relative; top: 40px;">
+            <p id="feedback">Escribe el código y presiona Probar Código.</p>
+
+            <div class="buttons">
+                <button id="testButton">Probar Código</button>
+                <button id="resetButton">Reiniciar</button>
+            </div>
+
+            <div class="navigation">
+                <button id="previousButton">← Anterior</button>
+                <button id="nextButton" disabled>Siguiente Nivel →</button>
+            </div>
+        </div>
+    </section>
+
+    <section class="game">
+        <div class="gameTitle">
+            <span>ESCENARIO</span>
+            <span id="coordinates">X: 100px, Y: 100px</span>
+        </div>
+
+        <div id="stage">
+            <div id="stickyArea">
+                <div id="stickyText">⬇ Haz scroll en este nivel</div>
+            </div>
+
+            <div id="target">🎯 Meta</div>
+
+            <div id="player">
+                <span>🤖</span>
+                <small>Matacho</small>
+            </div>
+        </div>
+
+        <p class="legend">🤖 Personaje &nbsp;&nbsp; 🎯 Meta</p>
+    </section>
+</main>
+
+<div id="winModal" class="modal hidden">
+    <div class="modalBox">
+        <div>🏆</div>
+        <h2>¡Felicidades!</h2>
+        <p>Completaste los 10 niveles y practicaste las cuatro posiciones CSS.</p>
+        <button id="playAgain">Jugar de nuevo</button>
+    </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

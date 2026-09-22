@@ -208,8 +208,17 @@ function computeRenderPosition(css, stageEl, entityEl) {
         top = PLAYER_ORIGIN.top + css.top - css.bottom;
         left = PLAYER_ORIGIN.left + css.left - css.right;
     } else {
-        top = css.bottom ? (stageHeight - entityHeight - css.bottom) : css.top;
-        left = css.right ? (stageWidth - entityWidth - css.right) : css.left;
+        if (css.bottom > 0) {
+            top = stageHeight - entityHeight - css.bottom;
+        } else {
+            top = css.top;
+        }
+
+        if (css.right > 0) {
+            left = stageWidth - entityWidth - css.right;
+        } else {
+            left = css.left;
+        }
     }
 
     return { top: top, left: left };

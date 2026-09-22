@@ -71,7 +71,7 @@ const levels = [
         answer: { position: "fixed", top: 150, left: 0, bottom: 0, right: 20 },
         message: "¡Muy bien! Fixed permanece fijo aunque hagamos scroll."
     },
-   {
+    {
         id: 9,
         title: "Nivel 9: Sticky",
         type: "sticky",
@@ -152,7 +152,9 @@ function readCSS(text) {
         top: 0,
         left: 0,
         bottom: 0,
-        right: 0
+        right: 0,
+        hasBottom: false,
+        hasRight: false
     };
 
     const declarations = text.toLowerCase().split(";");
@@ -181,10 +183,12 @@ function readCSS(text) {
 
         if (property === "bottom") {
             result.bottom = getNumber(value);
+            result.hasBottom = true;
         }
 
         if (property === "right") {
             result.right = getNumber(value);
+            result.hasRight = true;
         }
     });
 
@@ -208,13 +212,16 @@ function computeRenderPosition(css, stageEl, entityEl) {
         top = PLAYER_ORIGIN.top + css.top - css.bottom;
         left = PLAYER_ORIGIN.left + css.left - css.right;
     } else {
-        if (css.bottom > 0) {
+        // Detecta si se usó bottom explícitamente (incluso si es 0)
+        const useBottom = css.hasBottom !== undefined ? css.hasBottom : (css.bottom > 0);
+        if (useBottom) {
             top = stageHeight - entityHeight - css.bottom;
         } else {
             top = css.top;
         }
 
-        if (css.right > 0) {
+        const useRight = css.hasRight !== undefined ? css.hasRight : (css.right > 0);
+        if (useRight) {
             left = stageWidth - entityWidth - css.right;
         } else {
             left = css.left;
@@ -309,7 +316,7 @@ function loadLevel(number) {
     applyCSS({ position: "absolute", top: PLAYER_ORIGIN.top, left: PLAYER_ORIGIN.left, bottom: 0, right: 0 });
 }
 
-document.getElementById("testButton").addEventListener("click", function() {
+document.getElementById("testButton").addEventListener("click", function () {
     const code = input.value.trim();
 
     if (code === "") {
@@ -341,17 +348,17 @@ document.getElementById("testButton").addEventListener("click", function() {
     }
 });
 
-document.getElementById("resetButton").addEventListener("click", function() {
+document.getElementById("resetButton").addEventListener("click", function () {
     loadLevel(currentLevel);
 });
 
-document.getElementById("previousButton").addEventListener("click", function() {
+document.getElementById("previousButton").addEventListener("click", function () {
     if (currentLevel > 0) {
         loadLevel(currentLevel - 1);
     }
 });
 
-document.getElementById("nextButton").addEventListener("click", function() {
+document.getElementById("nextButton").addEventListener("click", function () {
     if (!completed) {
         return;
     }
@@ -363,7 +370,7 @@ document.getElementById("nextButton").addEventListener("click", function() {
     }
 });
 
-input.addEventListener("keydown", function(event) {
+input.addEventListener("keydown", function (event) {
     if (event.key === "Enter") {
         document.getElementById("testButton").click();
     }
@@ -371,7 +378,7 @@ input.addEventListener("keydown", function(event) {
 
 stage.addEventListener("scroll", updateCoordinates);
 
-document.getElementById("playAgain").addEventListener("click", function() {
+document.getElementById("playAgain").addEventListener("click", function () {
     document.getElementById("winModal").classList.add("hidden");
     loadLevel(0);
 });
